@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    stages {
+        stage("Clean Up"){
+            steps {
+                deleteDir()
+            }
+        }
+        stage("Clone Repo"){
+            steps {
+                sh "git clone git@github.com:IBSopenSource/ibs-invoices.git"
+            }
+        }
+        stage("Build"){
+            steps {
+                dir("ibs-invoices"){
+                    sh "npm install"
+                }
+            }
+        }
+        stage("Test"){
+            steps {
+                dir("ibs-invoices"){
+                    sh "npm run test"
+                }
+            }
+        }
+    }
+}
